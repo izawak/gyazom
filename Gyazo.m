@@ -22,11 +22,11 @@ GyazoInstall[]:=Block[{token},
   ];
 ];
 
-Gyazo[g_Graphics, opts:OptionsPattern[]]:= Gyazo[Image[g], opts];
+Gyazo[img_Image, opts:OptionsPattern[]]:= Gyazo[Show[img], opts];
 
-ImageFile[img_Image] := Block[{tmpf},
+ImageFile[g_Graphics] := Block[{tmpf},
   tmpf = CreateTemporary[];
-  Export[tmpf, img, "PNG"];
+  Export[tmpf, g, "PNG"];
   tmpf
   ];
 
@@ -41,7 +41,7 @@ AccessToken[]:=Block[{lo,token},
 
 Gyazo::notoken = "Access token is not found. Executing GyazoInstall[]...";
 
-Gyazo[img_Image, opts:OptionsPattern[]] := Block[{imgf, req, token, result},
+Gyazo[g_Graphics, opts:OptionsPattern[]] := Block[{imgf, req, token, result},
     token = AccessToken[];
     If[Not@StringQ[token],
       Message[Gyazo::notoken];
@@ -51,7 +51,7 @@ Gyazo[img_Image, opts:OptionsPattern[]] := Block[{imgf, req, token, result},
         Return[];
       ];
     ];
-    imgf = ImageFile[img];
+    imgf = ImageFile[g];
     req = HTTPRequest["https://upload.gyazo.com/api/upload", <|
       "Method" -> "POST",
       "ContentType" -> "multipart/form-data",
