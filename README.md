@@ -13,5 +13,7 @@ Install
 How to use
 ==========
 
-Execute Gyazo[img_Image] or Gyazo[g_Graphcis].
+## Upload
+
+Evaluate Gyazo[img_].
 
